@@ -25,7 +25,9 @@ int main() {
 
     std::cout << "Se rompe cuando hago el print" << std::endl;
     elGrafo.printMAdyacencia();
-    elGrafo.iterativeDFS(1);
+    std::cout << std::endl;
+    elGrafo.recursiveDFS(1);
+    elGrafo.deleteV(4);
     std::cout << std::endl;
     elGrafo.recursiveDFS(1);
     return 0;
