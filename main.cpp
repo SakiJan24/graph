@@ -1,8 +1,18 @@
 #include <iostream>
 #include "graph.h"
+#include "wgraph.h"
+#include "vertice.h"
 
 int main() {
     
+
+
+
+    ver elVertice;
+    elVertice.id = 1;
+    elVertice.x = 5.10686;
+    elVertice.y = 9.71466;
+
     Grafo<int> elGrafo(5);
    
     

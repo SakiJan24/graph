@@ -1,26 +1,28 @@
 #ifndef _W_GRAPH_H
-#define W_GRAPH_H
+#define _W_GRAPH_H
+
 #include <iostream>
 #include <vector>
 #include <queue>
-template <class T>
+#include "vertice.h"
+
 class WGraph {
-
-    public:
-        Grafo(int vertices);
-        std::vector<std::vector<bool>>mAdyacencia;
-        std::vector<std::vector<float> mPesos;
-        std::vector<T>vs;
-        bool insert(T valor);
-        bool addArista(T valor1, T valor2);
-        bool deleteV(T valor);
-        void printMAdyacencia(); 
-        void iterativeDFS(T valor);
-        std::vector<T> retConexiones(T val);
-        void recursiveDFS(T valor);
-        void recursiveDFSHelper(T valor, std::vector<T>& visited);
-
+public:
+    WGraph(int vertices);
+    std::vector<std::vector<bool>> mAdyacencia;
+    std::vector<std::vector<float>> mPesos; // Fixed: Added missing closing bracket
+    std::vector<ver> vs;
+    bool insert(ver valor);
+    bool addArista(int valor1, int valor2);
+    bool addPeso(int valor1, int valor2, float peso);
+    bool deleteV(int valor);
+    void printMAdyacencia(); 
+    void iterativeDFS(int valor);
+    std::vector<ver> retConexiones(int val);
+    void recursiveDFS(int valor);
+    void recursiveDFSHelper(int valor, std::vector<ver>& visited);
 };
 
 #include "wgraph.hxx"
+
 #endif

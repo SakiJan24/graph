@@ -3,22 +3,22 @@
 #include <iterator>
 #include <queue>
 #include <algorithm>
-template < class T >
-WGraph<T>::WGraph(int vertices) {
+
+WGraph::WGraph(int vertices) {
     
     this->mAdyacencia.resize(vertices, std::vector<bool>(vertices, 0));
     this->vs.resize(vertices);
 }
 
-template <class T>
-bool WGraph<T>::insert(T valor) {
+
+bool WGraph::insert(ver valor) {
 
 
     bool insertado = false;
     //Caso grafo empty
     for(int i = 0; i < this->vs.size() && !insertado; i++) {
 
-        if(vs[i] == T{}) {
+        if(vs[i].id == 0) {
 
             vs[i] = valor;
             insertado = true;
@@ -29,9 +29,11 @@ bool WGraph<T>::insert(T valor) {
 
         this->vs.push_back(valor);
         this->mAdyacencia.resize(vs.size());
+        this->mPesos.resize(vs.size());
         for(int i = 0; i < this->mAdyacencia.size(); i++) {
 
             this->mAdyacencia[i].resize(vs.size(), 0);
+            this->mPesos[i].resize(vs.size(), 0);
         }
         insertado = true;
 
@@ -39,19 +41,19 @@ bool WGraph<T>::insert(T valor) {
     return insertado;
 }
 
-template <class T>
-bool WGraph<T>::addArista(T valor1, T valor2) {
+
+bool WGraph::addArista( int valor1, int valor2) {
 
     bool insertada = false;
     int indice1=-1, indice2=-1;
     for(int i = 0; i < this->vs.size(); i++) {
 
-        if(valor1 == vs[i]){
+        if(valor1 == vs[i].id){
 
             indice1 = i;
         }
 
-        if(valor2 == vs[i]){
+        if(valor2 == vs[i].id){
 
             indice2 = i;
         }
@@ -70,21 +72,63 @@ bool WGraph<T>::addArista(T valor1, T valor2) {
     return insertada;
 }
 
-template <class T>
-bool WGraph<T>::deleteV(T valor) {
+
+
+bool WGraph::addPeso( int valor1, int valor2, float peso) {
+
+    bool insertada = false;
+    int indice1=-1, indice2=-1;
+    for(int i = 0; i < this->vs.size(); i++) {
+
+        if(valor1 == vs[i].id){
+
+            indice1 = i;
+        }
+
+        if(valor2 == vs[i].id){
+
+            indice2 = i;
+        }
+
+    }
+
+    if(indice2 == -1 || indice1 == -1) {
+
+        insertada = false;
+    }
+
+    else {
+
+        this->mPesos[indice1][indice2] = peso;
+    }
+    return insertada;
+
+}
+
+
+bool WGraph::deleteV(int valor) {
 
     bool eliminado = false;
-    typename std::vector<T>::iterator it = std::find(vs.begin(), vs.end(), valor);
+    typename std::vector<ver>::iterator it = vs.begin();
+    for(; it != vs.end(); it++) {
+
+        if((it)->id == valor) {
+
+            break;
+        }
+    }
     if(it!=vs.end()) {
 
         int index = std::distance(vs.begin(), it);
         this->vs.erase(vs.begin()+index);
 
+        mPesos.erase(mPesos.begin()+index);
         mAdyacencia.erase(mAdyacencia.begin()+index);
         // eliminar la columna de la matriz de adyacencia
         for (int i = 0; i < mAdyacencia.size(); i++) {
 
             mAdyacencia[i].erase(mAdyacencia[i].begin()+index);
+            mPesos[i].erase(mPesos[i].begin()+index);
         }
 
         eliminado = true;
@@ -94,8 +138,8 @@ bool WGraph<T>::deleteV(T valor) {
 }
 
 
-template <class T>
-void WGraph<T>::printMAdyacencia() {
+
+void WGraph::printMAdyacencia() {
     // Iterate over each row of the matrix
     for (const auto& row : mAdyacencia) {
         // Print the elements of the row
@@ -106,16 +150,17 @@ void WGraph<T>::printMAdyacencia() {
     }
 }
 
-template <class T>
-void WGraph<T>::iterativeDFS(T valor) {
 
-    std::queue<T> pila1;
+
+void WGraph::iterativeDFS(int valor) {
+
+    std::queue<int> pila1;
     //std::queue<T> pila2;
-    std::vector<T>visitados;
+    std::vector<int>visitados;
     pila1.push(valor);
     while(!pila1.empty()) {
             
-        T v = pila1.front();
+        int v = pila1.front();
         pila1.pop();
         //pila2.pop();
         bool visitado = false;
@@ -130,11 +175,12 @@ void WGraph<T>::iterativeDFS(T valor) {
         if(!visitado) {
             std::cout << v << "-";
             visitados.push_back(v);
-            std::vector<T> aristas = retConexiones(v);
-            typename std::vector<T>::iterator it = aristas.begin();
+            std::vector<ver> aristas = retConexiones(v);
+            typename std::vector<ver>::iterator it = aristas.begin();
+
             for(; it != aristas.end(); it++) {
 
-                pila1.push(*it);
+                pila1.push((it)->id);
                 //pila2.push(v);
             }
 
@@ -144,46 +190,59 @@ void WGraph<T>::iterativeDFS(T valor) {
     }
 }
 
-template<class T>
-std::vector<T> WGraph<T>::retConexiones(T val) {
+
+std::vector<ver> WGraph::retConexiones(int val) {
 
     int index;
     for(int i = 0; i < vs.size(); i++) {
 
-        if(vs[i] == val) {
+        if(vs[i].id == val) {
 
             index = i;
         }
     }
 
-    std::vector<T> conexiones;
+    std::vector<ver> conexiones;
     for(int i = 0; i < vs.size(); i++) {
-
-        if(this->mAdyacencia[index][i] == true) {
-
-            conexiones.push_back(vs[i]); 
-        }
+    
+        conexiones.push_back(vs[i]); 
+        
     }
-    std::sort(conexiones.begin(), conexiones.end());  
+    //std::sort(conexiones.begin(), conexiones.end());  
 
     return conexiones;
 }
 
-template <class T>
-void WGraph<T>::recursiveDFS(T valor) {
-    std::vector<T> visited;
+
+void WGraph::recursiveDFS(int valor) {
+    std::vector<ver> visited;
     recursiveDFSHelper(valor, visited);
 }
 
-template <class T>
-void Grafo<T>::recursiveDFSHelper(T valor, std::vector<T>& visited) {
-    visited.push_back(valor);
+
+void WGraph::recursiveDFSHelper( int valor, std::vector<ver>& visited) {
+    ver vertice;
+    for(int i = 0; i < vs.size(); i++ ) {
+
+        if(vs[i].id == valor) {
+
+            vertice = vs[i];
+        }
+    }
+    visited.push_back(vertice);
     std::cout << valor << " ";
 
-    std::vector<T> conexiones = retConexiones(valor);
-    for (T conexion : conexiones) {
+    std::vector<ver> conexiones = retConexiones(valor);
+    for (ver conexion : conexiones) {
+
+        /// ACA 
+        /// EST[A]
+
+
+        /// EL ERROR
+        for()
         if (std::find(visited.begin(), visited.end(), conexion) == visited.end()) {
-            recursiveDFSHelper(conexion, visited);
+            recursiveDFSHelper(conexion.id, visited);
         }
     }
 }

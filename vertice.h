@@ -3,7 +3,7 @@
 
 struct ver {
 
-    int id;
+    int id = 0;
     float x;
     float y;
 };
