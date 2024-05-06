@@ -280,7 +280,7 @@ bool WGraph::addPesos() {
         for(int j = 0; j < vs.size(); j++) {
         
             this->addPeso(i,j);
-            this->addPeso(j,i);
+            this->addPeso(j,i); 
         }
     }
 
