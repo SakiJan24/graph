@@ -3,10 +3,12 @@
 #include <iterator>
 #include <queue>
 #include <algorithm>
+#include <cmath>
 
 WGraph::WGraph(int vertices) {
     
     this->mAdyacencia.resize(vertices, std::vector<bool>(vertices, 0));
+    this->mPesos.resize(vertices, std::vector<float>(vertices));
     this->vs.resize(vertices);
 }
 
@@ -74,10 +76,11 @@ bool WGraph::addArista( int valor1, int valor2) {
 
 
 
-bool WGraph::addPeso( int valor1, int valor2, float peso) {
+bool WGraph::addPeso( int valor1, int valor2) {
 
     bool insertada = false;
     int indice1=-1, indice2=-1;
+
     for(int i = 0; i < this->vs.size(); i++) {
 
         if(valor1 == vs[i].id){
@@ -92,6 +95,8 @@ bool WGraph::addPeso( int valor1, int valor2, float peso) {
 
     }
 
+
+
     if(indice2 == -1 || indice1 == -1) {
 
         insertada = false;
@@ -99,7 +104,11 @@ bool WGraph::addPeso( int valor1, int valor2, float peso) {
 
     else {
 
-        this->mPesos[indice1][indice2] = peso;
+        // hago el calc de distancia
+        float X = pow(static_cast<double>(vs[indice1].x-vs[indice2].x), 2);
+        float Y = pow(static_cast<double>(vs[indice1].y-vs[indice2].y), 2);
+        float distancia = sqrt(X+Y);
+        this->mPesos[indice1][indice2] = distancia;
     }
     return insertada;
 
@@ -150,6 +159,16 @@ void WGraph::printMAdyacencia() {
     }
 }
 
+void WGraph::printMPesos() {
+    // Iterate over each row of the matrix
+    for (const auto& row : mPesos) {
+        // Print the elements of the row
+        for (float connection : row) {
+            std::cout << connection << " ";
+        }
+        std::cout << std::endl; // Print newline after each row
+    }
+}
 
 
 void WGraph::iterativeDFS(int valor) {
@@ -240,9 +259,30 @@ void WGraph::recursiveDFSHelper( int valor, std::vector<ver>& visited) {
 
 
         /// EL ERROR
-        for()
-        if (std::find(visited.begin(), visited.end(), conexion) == visited.end()) {
+        typename std::vector<ver>::iterator it2 = visited.begin();
+        for(; it2 != vs.end(); it2++) {
+
+            if((it2)->id == conexion.id) {
+
+                break;
+            }
+    }
+        if ( it2 == visited.end()) {
             recursiveDFSHelper(conexion.id, visited);
         }
     }
+}
+
+bool WGraph::addPesos() {
+
+    for(int i = 0; i < vs.size(); i++) {
+        
+        for(int j = 0; j < vs.size(); j++) {
+        
+            this->addPeso(i,j);
+            this->addPeso(j,i);
+        }
+    }
+
+    return true;
 }

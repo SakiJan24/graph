@@ -3,42 +3,61 @@
 #include "wgraph.h"
 #include "vertice.h"
 
+
+
+// Buenas, en este main estoy hacinedo las pruebas de este grafo, WGraph, no utilizar
 int main() {
     
 
-
-
+    // Hago la instancia de WGraph
+    // Para inserción de datos lo que hago es meterle los datos a un struct de tipo vértice varias veces
+    // falta hacer la lectura del archivo ahorita lo hago
+    WGraph grafo(6);
     ver elVertice;
-    elVertice.id = 1;
+
+    elVertice.id = 0;
     elVertice.x = 5.10686;
     elVertice.y = 9.71466;
+    grafo.insert(elVertice);
 
-    Grafo<int> elGrafo(5);
-   
-    
-    elGrafo.insert(1);
-    elGrafo.insert(2);
-    elGrafo.insert(3);
-    elGrafo.insert(4);
-    elGrafo.addArista(1,2);
-    elGrafo.addArista(1,3);
-    elGrafo.addArista(2,4);
-    elGrafo.printMAdyacencia();
-    elGrafo.insert(5);
-    elGrafo.addArista(4,5);
-    std::cout << std::endl;
-    std::cout << std::endl;
+    elVertice.id = 1;
+    elVertice.x = 2.80042;
+    elVertice.y = 5.46107;
+    grafo.insert(elVertice);
 
-    elGrafo.insert(6);
-    elGrafo.addArista(2,6);
-    elGrafo.addArista(6,5);
+    elVertice.id = 2;
+    elVertice.x = 7.19269;
+    elVertice.y = 1.13281;
+    grafo.insert(elVertice);
 
-    std::cout << "Se rompe cuando hago el print" << std::endl;
-    elGrafo.printMAdyacencia();
-    std::cout << std::endl;
-    elGrafo.recursiveDFS(1);
-    elGrafo.deleteV(4);
-    std::cout << std::endl;
-    elGrafo.recursiveDFS(1);
+    elVertice.id = 3;
+    elVertice.x = 4.71483;
+    elVertice.y = 5.9254;
+    grafo.insert(elVertice);
+
+    elVertice.id = 4;
+    elVertice.x = 9.44318;
+    elVertice.y = 4.50918;
+    grafo.insert(elVertice);
+
+    elVertice.id = 5;
+    elVertice.x = 3.36351;
+    elVertice.y = 8.47684;
+    grafo.insert(elVertice);
+
+    // Ac[a] lo que se hace es que se va generar la matriz de pesos del grafo basado en los v[ertice ingresados]
+    grafo.addPesos();
+
+    // Esta funci[on ] imprime todo los n[u]meros dentro de la matriz de pesos
+    grafo.printMPesos();
+
+
+
+    // Ac[a] va el recorrido:
+
+
+
+
+
     return 0;
 }

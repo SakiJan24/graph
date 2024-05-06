@@ -12,15 +12,21 @@ public:
     std::vector<std::vector<bool>> mAdyacencia;
     std::vector<std::vector<float>> mPesos; // Fixed: Added missing closing bracket
     std::vector<ver> vs;
+
+
     bool insert(ver valor);
     bool addArista(int valor1, int valor2);
-    bool addPeso(int valor1, int valor2, float peso);
+    bool addPeso(int valor1, int valor2);
     bool deleteV(int valor);
     void printMAdyacencia(); 
     void iterativeDFS(int valor);
     std::vector<ver> retConexiones(int val);
     void recursiveDFS(int valor);
     void recursiveDFSHelper(int valor, std::vector<ver>& visited);
+    bool addPesos();
+    void printMPesos();
+
+
 };
 
 #include "wgraph.hxx"
