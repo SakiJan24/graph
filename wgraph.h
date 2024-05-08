@@ -25,6 +25,8 @@ public:
     void recursiveDFSHelper(int valor, std::vector<ver>& visited);
     bool addPesos();
     void printMPesos();
+    std::vector<ver> prim_rec(int valor, std::vector<ver> & visited);
+    std::vector<ver> prim();
 
 
 };

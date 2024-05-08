@@ -19,6 +19,7 @@ int main() {
     elVertice.x = 5.10686;
     elVertice.y = 9.71466;
     grafo.insert(elVertice);
+    
 
     elVertice.id = 1;
     elVertice.x = 2.80042;
@@ -51,11 +52,18 @@ int main() {
     // Esta funci[on ] imprime todo los n[u]meros dentro de la matriz de pesos
     grafo.printMPesos();
 
-
+    grafo.recursiveDFS(0);
 
     // Ac[a] va el recorrido:
 
+    std::vector<ver> recorrido;
+    recorrido = grafo.prim();
 
+    for (int i = 0; i < grafo.vs.size(); i++) {
+        
+        std::cout << recorrido[i].id << std::endl;
+    }
+    
 
 
 

@@ -9,7 +9,14 @@ WGraph::WGraph(int vertices) {
     
     this->mAdyacencia.resize(vertices, std::vector<bool>(vertices, 0));
     this->mPesos.resize(vertices, std::vector<float>(vertices));
-    this->vs.resize(vertices);
+    ver vacio;
+    vacio.id = -1;
+    for (int i = 0; i < vertices; i++) {
+
+        this->vs.push_back(vacio);
+    }
+    
+    
 }
 
 
@@ -20,10 +27,11 @@ bool WGraph::insert(ver valor) {
     //Caso grafo empty
     for(int i = 0; i < this->vs.size() && !insertado; i++) {
 
-        if(vs[i].id == 0) {
+        if(vs[i].id == -1) {
 
-            vs[i] = valor;
+            vs[i] = valor; 
             insertado = true;
+
         }
     }
 
@@ -104,11 +112,15 @@ bool WGraph::addPeso( int valor1, int valor2) {
 
     else {
 
+        std::cout << "Val1: " << valor1 << "," << valor2 <<std::endl;
+        std::cout << "Primer valor: " << vs[indice1].x << "," << vs[indice1].y <<std::endl;
+        std::cout << "Segundo valor: " << vs[indice2].x << "," << vs[indice2].y <<std::endl;
         // hago el calc de distancia
         float X = pow(static_cast<double>(vs[indice1].x-vs[indice2].x), 2);
         float Y = pow(static_cast<double>(vs[indice1].y-vs[indice2].y), 2);
         float distancia = sqrt(X+Y);
         this->mPesos[indice1][indice2] = distancia;
+        std::cout << "distancia: " << distancia << std::endl; 
     }
     return insertada;
 
@@ -260,7 +272,7 @@ void WGraph::recursiveDFSHelper( int valor, std::vector<ver>& visited) {
 
         /// EL ERROR
         typename std::vector<ver>::iterator it2 = visited.begin();
-        for(; it2 != vs.end(); it2++) {
+        for(; it2 != visited.end(); it2++) {
 
             if((it2)->id == conexion.id) {
 
@@ -270,6 +282,11 @@ void WGraph::recursiveDFSHelper( int valor, std::vector<ver>& visited) {
         if ( it2 == visited.end()) {
             recursiveDFSHelper(conexion.id, visited);
         }
+/*
+        else {
+
+            break;
+        }*/
     }
 }
 
@@ -286,3 +303,77 @@ bool WGraph::addPesos() {
 
     return true;
 }
+
+
+std::vector<ver> WGraph::prim() {
+
+    ver chiqui = this->vs[0];
+    std::vector<ver> visited;
+    std::vector<ver> recorrido;
+    for(int i = 0; i < this->vs.size(); i++) {
+
+
+        if( (vs[i].x +vs[i].y) < (chiqui.x+chiqui.y)) {
+            
+            std::cout << "chiqui en : "<< i  << chiqui.id <<  std::endl;
+            chiqui = vs[i];
+        }
+    }
+
+    visited.push_back(chiqui);
+    recorrido = prim_rec(chiqui.id, visited);
+    return recorrido; 
+}
+
+
+
+std::vector<ver> WGraph::prim_rec(int valor, std::vector<ver>& visited) {
+
+    std::vector<ver> orden;
+    if(visited.size() == this->vs.size()) {
+        return visited;
+    }
+    std::cout << "El valor es: " << valor << std::endl;
+    ver loDist;
+    float dist = 0;
+    for(int i = 0; i < vs.size(); i++) {
+        int k = 0;
+        for(;k<visited.size(); k++) {
+
+            if(visited[k].id == vs[i].id) {
+
+                break;
+            }
+        }
+
+        if(k == visited.size()) {
+            
+
+            float distancia = this->mPesos[visited.back().id][i];
+            std::cout << "Y la distancia es: " << distancia << std::endl;
+            std::cout << "En el vert: " << visited.back().id << std::endl;
+            if(dist == 0 || distancia < dist) {
+
+                dist = this->mPesos[valor][i];
+                loDist= vs[i];
+
+  
+            }  
+        }
+
+
+      
+            
+        
+    }
+
+       
+    
+
+    visited.push_back(loDist);
+
+    return this->prim_rec(loDist.id, visited);
+
+}
+
+
