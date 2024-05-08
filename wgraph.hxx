@@ -9,7 +9,14 @@ WGraph::WGraph(int vertices) {
     
     this->mAdyacencia.resize(vertices, std::vector<bool>(vertices, 0));
     this->mPesos.resize(vertices, std::vector<float>(vertices));
-    this->vs.resize(vertices);
+    ver vacio;
+    vacio.id = -1;
+    for (int i = 0; i < vertices; i++) {
+
+        this->vs.push_back(vacio);
+    }
+    
+    
 }
 
 
@@ -20,10 +27,11 @@ bool WGraph::insert(ver valor) {
     //Caso grafo empty
     for(int i = 0; i < this->vs.size() && !insertado; i++) {
 
-        if(vs[i].id == 0) {
+        if(vs[i].id == -1) {
 
-            vs[i] = valor;
+            vs[i] = valor; 
             insertado = true;
+
         }
     }
 
@@ -104,11 +112,15 @@ bool WGraph::addPeso( int valor1, int valor2) {
 
     else {
 
+        std::cout << "Val1: " << valor1 << "," << valor2 <<std::endl;
+        std::cout << "Primer valor: " << vs[indice1].x << "," << vs[indice1].y <<std::endl;
+        std::cout << "Segundo valor: " << vs[indice2].x << "," << vs[indice2].y <<std::endl;
         // hago el calc de distancia
         float X = pow(static_cast<double>(vs[indice1].x-vs[indice2].x), 2);
         float Y = pow(static_cast<double>(vs[indice1].y-vs[indice2].y), 2);
         float distancia = sqrt(X+Y);
         this->mPesos[indice1][indice2] = distancia;
+        std::cout << "distancia: " << distancia << std::endl; 
     }
     return insertada;
 
@@ -260,7 +272,7 @@ void WGraph::recursiveDFSHelper( int valor, std::vector<ver>& visited) {
 
         /// EL ERROR
         typename std::vector<ver>::iterator it2 = visited.begin();
-        for(; it2 != vs.end(); it2++) {
+        for(; it2 != visited.end(); it2++) {
 
             if((it2)->id == conexion.id) {
 
@@ -270,6 +282,11 @@ void WGraph::recursiveDFSHelper( int valor, std::vector<ver>& visited) {
         if ( it2 == visited.end()) {
             recursiveDFSHelper(conexion.id, visited);
         }
+/*
+        else {
+
+            break;
+        }*/
     }
 }
 
@@ -280,9 +297,10 @@ bool WGraph::addPesos() {
         for(int j = 0; j < vs.size(); j++) {
         
             this->addPeso(i,j);
-            this->addPeso(j,i); 
+            this->addPeso(j,i);
         }
     }
 
     return true;
 }
+
