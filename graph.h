@@ -7,6 +7,7 @@ template <class T>
 class Grafo {
 
     public:
+        Grafo();
         Grafo(int vertices);
         std::vector<std::vector<bool>>mAdyacencia;
         std::vector<T>vs;

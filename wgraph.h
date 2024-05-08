@@ -8,6 +8,8 @@
 
 class WGraph {
 public:
+
+    WGraph();
     WGraph(int vertices);
     std::vector<std::vector<bool>> mAdyacencia;
     std::vector<std::vector<float>> mPesos; // Fixed: Added missing closing bracket

@@ -2,13 +2,18 @@
 #define _CIRCUIT_H
 #include "vertice.h"
 #include "graph.h"
+#include "wgraph.h"
 #include <vector>
 #include <queue>
 
-class Circuit {
+class Lote {
 
-    Grafo<ver> circuito;
-    
+
+    public:
+        std::vector<WGraph> grafos;
+
+        Lote();
+        bool escribirArchivo();
 
 
 };

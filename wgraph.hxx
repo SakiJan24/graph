@@ -5,6 +5,12 @@
 #include <algorithm>
 #include <cmath>
 
+
+
+WGraph::WGraph() {
+
+}
+
 WGraph::WGraph(int vertices) {
     
     this->mAdyacencia.resize(vertices, std::vector<bool>(vertices, 0));
@@ -112,15 +118,12 @@ bool WGraph::addPeso( int valor1, int valor2) {
 
     else {
 
-        std::cout << "Val1: " << valor1 << "," << valor2 <<std::endl;
-        std::cout << "Primer valor: " << vs[indice1].x << "," << vs[indice1].y <<std::endl;
-        std::cout << "Segundo valor: " << vs[indice2].x << "," << vs[indice2].y <<std::endl;
+      
         // hago el calc de distancia
         float X = pow(static_cast<double>(vs[indice1].x-vs[indice2].x), 2);
         float Y = pow(static_cast<double>(vs[indice1].y-vs[indice2].y), 2);
         float distancia = sqrt(X+Y);
         this->mPesos[indice1][indice2] = distancia;
-        std::cout << "distancia: " << distancia << std::endl; 
     }
     return insertada;
 
@@ -315,7 +318,7 @@ std::vector<ver> WGraph::prim() {
 
         if( (vs[i].x +vs[i].y) < (chiqui.x+chiqui.y)) {
             
-            std::cout << "chiqui en : "<< i  << chiqui.id <<  std::endl;
+           // std::cout << "chiqui en : "<< i  << chiqui.id <<  std::endl;
             chiqui = vs[i];
         }
     }
@@ -333,7 +336,7 @@ std::vector<ver> WGraph::prim_rec(int valor, std::vector<ver>& visited) {
     if(visited.size() == this->vs.size()) {
         return visited;
     }
-    std::cout << "El valor es: " << valor << std::endl;
+   // std::cout << "El valor es: " << valor << std::endl;
     ver loDist;
     float dist = 0;
     for(int i = 0; i < vs.size(); i++) {
@@ -350,8 +353,8 @@ std::vector<ver> WGraph::prim_rec(int valor, std::vector<ver>& visited) {
             
 
             float distancia = this->mPesos[visited.back().id][i];
-            std::cout << "Y la distancia es: " << distancia << std::endl;
-            std::cout << "En el vert: " << visited.back().id << std::endl;
+          //  std::cout << "Y la distancia es: " << distancia << std::endl;
+         //   std::cout << "En el vert: " << visited.back().id << std::endl;
             if(dist == 0 || distancia < dist) {
 
                 dist = this->mPesos[valor][i];

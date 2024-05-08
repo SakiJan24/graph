@@ -2,17 +2,41 @@
 #include "graph.h"
 #include "wgraph.h"
 #include "vertice.h"
+#include "circuit.h"
+#include <sstream>
+#include <string>
+#include <vector> 
+#include <fstream>
 
-
-
+bool leerCircuito( Lote& circuitos, const std::string& nomArch);
 // Buenas, en este main estoy hacinedo las pruebas de este grafo, WGraph, no utilizar
-int main() {
+int main(int argc, char* argv[]) {
     
+
+
+
+    /*if(argc < 2) {
+
+        std::cerr<< "Uso: " << argv[ 0 ] << " archivo_entrada" << std::endl;
+        return -1;
+    }*/
 
     // Hago la instancia de WGraph
     // Para inserción de datos lo que hago es meterle los datos a un struct de tipo vértice varias veces
     // falta hacer la lectura del archivo ahorita lo hago
-    WGraph grafo(6);
+    Lote circuitos;
+
+
+    bool leyo = leerCircuito(circuitos, "in_2.txt");
+
+    if(leyo) {
+
+        circuitos.escribirArchivo();
+    }
+
+
+    /*
+    WGraph grafo;
     ver elVertice;
 
     elVertice.id = 0;
@@ -52,7 +76,7 @@ int main() {
     // Esta funci[on ] imprime todo los n[u]meros dentro de la matriz de pesos
     grafo.printMPesos();
 
-    grafo.recursiveDFS(0);
+
 
     // Ac[a] va el recorrido:
 
@@ -63,9 +87,48 @@ int main() {
         
         std::cout << recorrido[i].id << std::endl;
     }
-    
+    */
 
 
 
     return 0;
+}
+
+
+
+bool leerCircuito( Lote& circuitos, const std::string& nomArch) {
+
+
+    std::ifstream entrada( nomArch.c_str());
+    if(!entrada) {
+
+        return false;
+    }
+    int cantCircuitos = 0;
+    entrada >> cantCircuitos;
+
+    for (int i = 0; i < cantCircuitos && !entrada.eof(); i++) {
+        /* code */
+        int cantHuecos = 0;
+        entrada>> cantHuecos;
+        WGraph circuito(cantHuecos);
+        for (int j = 0; j < cantHuecos; j++) {
+            /* code */
+            ver nuevoVertice;
+            float x = 0, y = 0;
+
+            entrada >> x >> y;
+            nuevoVertice.id = j;
+            nuevoVertice.x = x;
+            nuevoVertice.y = y;
+            circuito.insert(nuevoVertice);
+          //  std::cout << x << "," << y << std::endl;
+        }
+        
+
+        circuitos.grafos.push_back(circuito);
+        
+    }
+    entrada.close();
+    return true;
 }
