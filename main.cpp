@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     Lote circuitos;
 
 
-    bool leyo = leerCircuito(circuitos, "in_2.txt");
+    bool leyo = leerCircuito(circuitos, "in_0.txt");
 
     if(leyo) {
 

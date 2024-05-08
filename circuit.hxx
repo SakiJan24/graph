@@ -11,7 +11,7 @@ Lote::Lote() {
 bool Lote::escribirArchivo() {
 
     bool writen = false;
-    std::ofstream out("out_2.txt");
+    std::ofstream out("out_0.txt");
     if(!out) {
 
         return writen;
