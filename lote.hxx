@@ -1,4 +1,4 @@
-#include "circuit.h"
+#include "lote.h"
 #include "vertice.h"
 #include <fstream>
 
@@ -8,10 +8,27 @@ Lote::Lote() {
 
 }
 
-bool Lote::escribirArchivo() {
+bool Lote::escribirArchivo(std::string arch) {
+
+    std::string archi;
+    if(arch == "in_0.txt") {
+        
+        archi = "out_0.txt";
+    }
+
+    else if(arch == "in_1.txt") {
+        
+        archi = "out_1.txt";
+    }
+
+    else if(arch == "in_2.txt") {
+        
+        archi = "out_2.txt";
+    }
+
 
     bool writen = false;
-    std::ofstream out("out_0.txt");
+    std::ofstream out(archi);
     if(!out) {
 
         return writen;

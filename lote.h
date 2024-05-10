@@ -1,7 +1,6 @@
-#ifndef _CIRCUIT_H
-#define _CIRCUIT_H
+#ifndef _LOTE_H_
+#define _LOTE_H_
 #include "vertice.h"
-#include "graph.h"
 #include "wgraph.h"
 #include <vector>
 #include <queue>
@@ -13,11 +12,12 @@ class Lote {
         std::vector<WGraph> grafos;
 
         Lote();
-        bool escribirArchivo();
+        bool escribirArchivo(std::string arch);
+   
 
 
 };
 
 
-#include "circuit.hxx"
+#include "lote.hxx"
 #endif
