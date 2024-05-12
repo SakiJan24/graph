@@ -3,7 +3,7 @@
 #include <string>
 #include <vector> 
 #include <fstream>
-// TODO #1: incluir archivo s de cabecera que contienen:
+// TODO #1: incluir archivos de cabecera que contienen:
 // El grafo a usar
 #include "wgraph.h"
 // Los vertices
@@ -63,30 +63,33 @@ bool leerCircuito( Lote& circuitos, const std::string& nomArch) {
 
         //Esta es una excepción en dónde se pide ingresar un grafo de 0 vértices
         //En este caso se tiene pasar a la siguiente línea para poder ver otro grafo
+        // Check if the graph has zero vertices
         if (cantHuecos == 0) {
-           
-           entrada>> cantHuecos;
-           i++;
-        }
-        else {
+            // Skip the vertices for this graph
+            for (int j = 0; j < cantHuecos; j++) {
+                float x, y;
+                entrada >> x >> y; // Read and discard vertex coordinates
+            }
+        } else {
+            // Proceed as usual to read vertices for non-zero graphs
             WGraph circuito(cantHuecos);
             for (int j = 0; j < cantHuecos; j++) {
-                /* code */
                 ver nuevoVertice;
-                float x = 0, y = 0;
-
+                float x, y;
                 entrada >> x >> y;
                 nuevoVertice.id = j;
                 nuevoVertice.x = x;
                 nuevoVertice.y = y;
                 circuito.insert(nuevoVertice);
-            //  std::cout << x << "," << y << std::endl;
+               // std::cout << nuevoVertice.x << ", "<< nuevoVertice.y << std::endl; 
             }
+            circuitos.grafos.push_back(circuito);
+        }
+
 
             
 
-            circuitos.grafos.push_back(circuito);
-        }
+        
         
     }
     entrada.close();
