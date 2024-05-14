@@ -31,9 +31,21 @@ int main(int argc, char* argv[]) {
     // Si este archivo fue leído correctamente se escribe el grafo con las distancias ordenadas de menor a mayor empezando por el origen
     if(leyo) {
 
-        circuitos.escribirArchivo(argv[1]);
+        bool escrito = circuitos.escribirArchivo(argv[1]);
+        if(escrito) {
+
+            std::cout << "El archivo fue escrito con exito" << std::endl;
+        }
+        else {
+
+            std::cout << "El archivo NO fue escrito con exito" << std::endl;
+        }
     }
 
+    else {
+
+        std::cout << "No se pudo leer archivo por favor revise que el archivo especificado este correctamente escrito" << std::endl;
+    }
 
     return 0;
 }
@@ -56,24 +68,24 @@ bool leerCircuito( Lote& circuitos, const std::string& nomArch) {
 
     for (int i = 0; i < cantCircuitos && !entrada.eof(); i++) {
         
-        
-        
         int cantHuecos = 0;
         entrada>> cantHuecos;
 
         //Esta es una excepción en dónde se pide ingresar un grafo de 0 vértices
         //En este caso se tiene pasar a la siguiente línea para poder ver otro grafo
-        // Check if the graph has zero vertices
         if (cantHuecos == 0) {
-            // Skip the vertices for this graph
+            
             for (int j = 0; j < cantHuecos; j++) {
+
                 float x, y;
-                entrada >> x >> y; // Read and discard vertex coordinates
+                entrada >> x >> y; 
             }
-        } else {
-            // Proceed as usual to read vertices for non-zero graphs
+        } 
+        else {
+        
             WGraph circuito(cantHuecos);
             for (int j = 0; j < cantHuecos; j++) {
+
                 ver nuevoVertice;
                 float x, y;
                 entrada >> x >> y;
@@ -81,16 +93,9 @@ bool leerCircuito( Lote& circuitos, const std::string& nomArch) {
                 nuevoVertice.x = x;
                 nuevoVertice.y = y;
                 circuito.insert(nuevoVertice);
-               // std::cout << nuevoVertice.x << ", "<< nuevoVertice.y << std::endl; 
             }
             circuitos.grafos.push_back(circuito);
         }
-
-
-            
-
-        
-        
     }
     entrada.close();
     return true;
