@@ -234,4 +234,3 @@ std::vector<ver> WGraph::prim_rec(int valor, std::vector<ver>& visited) {
 
 }
 
-

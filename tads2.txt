@@ -1,0 +1,25 @@
+TAD Filtro
+
+Estado:
+- numE, valor entero, contiene el número de entradas del filtro
+- numS, valor entero, contiene el número de salids del filtro
+- proceso, cadena de caracteres, contiene el nombre del filtro o proceso que se va a hacer
+
+
+TAD Grafo
+
+Estado:
+- mAdyacencia, colección de colecciones de valores enteros, contiene los valores de las entradas y las salidas de de un filtro 
+- filtros, todos los filtros existentes dentro del la aplicación de procesamiento de imágenes
+
+Comportamiento:
+- insertarNuevoFiltro(entradas, salidas, filtro):booleano, dados los valores de las entradas, es decir, los nombres de los filtros de entrada así cómo las alidas, además, un filtro lleno, es decir, que tenga los valores de sus entradas y salidas junto con su nombre, agregar un nuevo filtro dentro del grafo de procesamiento de imágenes y conectar las respectivas entradas y salidas cone ste nuevo filtro //preguntar que contienen las entradas y salidas
+
+- calcularCosto(filtro1, filtro2): booleano; dados dos filtros, se busca calcular el costo computacional entre esos dos filtros //preguntar al profe si es la ruta más corta
+
+TAD AplicacionPorcesamiento
+Grafo
+
+
+
+
