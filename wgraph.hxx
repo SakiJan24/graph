@@ -25,8 +25,7 @@ WGraph::WGraph(int vertices) {
 
 
 bool WGraph::insert(ver valor) {
-
-
+    
     bool insertado = false;
     //Caso grafo empty
     for(int i = 0; i < this->vs.size() && !insertado; i++) {
@@ -81,6 +80,7 @@ bool WGraph::addPeso( int valor1, int valor2) {
         insertada = false;
     }
 
+
     else {
 
         // hago el calc de distancia
@@ -117,7 +117,6 @@ bool WGraph::deleteV(int valor) {
         }
 
         eliminado = true;
-
     }
     return eliminado; 
 }
@@ -187,7 +186,6 @@ std::vector<ver> WGraph::prim() {
 
         if( (vs[i].x +vs[i].y) < (chiqui.x+chiqui.y)) {
             
-           // std::cout << "chiqui en : "<< i  << chiqui.id <<  std::endl;
             chiqui = vs[i];
         }
     }
@@ -231,6 +229,57 @@ std::vector<ver> WGraph::prim_rec(int valor, std::vector<ver>& visited) {
     visited.push_back(loDist);
 
     return this->prim_rec(loDist.id, visited);
+
+}
+
+
+int WGraph::minDistance(std::vector<int> & dist, std::vector<bool>& spSet, int V) {
+
+    
+    int min = INT_MIN, min_index;
+
+    for(int v = 0; v < V; v++) {
+
+        if(!spSet[v] && dist[v] >= min) {
+
+            min = dist[v];
+            min_index = v;
+        }
+    }
+
+    return min_index;
+}
+
+
+void WGraph::dijkstra(std::vector<std::vector<int>>&graph, int src) {
+
+    int V = graph.size();
+    std::vector<int> dist(V, INT_MAX);
+    std::vector<bool> sptSet(V,false);
+
+    dist[src] = 0;
+
+    for(int count = 0; count < V - 1; count++) {
+
+        int u = minDistance(dist,sptSet,V); 
+
+        sptSet[u] = true;
+    
+        for(int v = 0; v < V; v++) {
+            
+            if(!sptSet[v] && graph[u][v] && dist[u] != INT_MAX && dist[u] + graph[u][v] < dist[v]) {
+
+                dist[v] = dist[u] + graph[u][v];
+            }
+        }
+    }
+
+    std::cout << "Vertex distance from source" << std::endl;
+    for(int i = 0; i < V; i++) { 
+    
+        std::cout << i << "\t" << dist[i] << std::endl;
+    }
+
 
 }
 

@@ -27,7 +27,6 @@ int main(int argc, char* argv[]) {
     // Leer el archivo que el usuario haya ingresado
     bool leyo = leerCircuito(circuitos, argv[1]);
 
-
     // Si este archivo fue leído correctamente se escribe el grafo con las distancias ordenadas de menor a mayor empezando por el origen
     if(leyo) {
 

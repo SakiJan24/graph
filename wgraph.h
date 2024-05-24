@@ -23,7 +23,8 @@ public:
     void printMPesos();
     std::vector<ver> prim_rec(int valor, std::vector<ver> & visited);
     std::vector<ver> prim();
-
+    int minDistance(std::vector<int> & dist, std::vector<bool>& spSet, int V);
+    void dijkstra(std::vector<std::vector<int>>&graph, int src);
 
 };
 
